@@ -200,8 +200,10 @@ def monitor_coins():
                     print(f"\n🚀 PUMP ALERT: {result}")
             except Exception as e:
                 print(f"Error monitoring {coin}: {e}")
+            
+            time.sleep(3)  # Add 3 second delay between each token
         
-        time.sleep(30)  # Check every 30 seconds
+        time.sleep(30)  # Still check every 30 seconds after full cycle
 
 # Start monitoring in background
 monitor_thread = threading.Thread(target=monitor_coins, daemon=True)

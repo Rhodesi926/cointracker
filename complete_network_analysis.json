@@ -1,0 +1,420 @@
+{
+  "analysis_timestamp": "2025-09-29T13:32:13.022079",
+  "target_wallet": "DNfuF1L62WWyW3pNakVkyGGFzVVhj4Yr52jSmdTyeBHm",
+  "network_size": 8,
+  "total_findings": 76,
+  "primary_coordination": {
+    "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi": {
+      "coordination_count": 7,
+      "coordinated_tokens": [
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 2.401388888888889,
+          "wallet_amount": 3466.5564926970005,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759144717,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 3.125,
+          "wallet_amount": 2846.911770770999,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759142112,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 5.115555555555556,
+          "wallet_amount": 2843.1300603439995,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759134946,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 6.266388888888889,
+          "wallet_amount": 3537.062486622,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759130803,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 6.480833333333333,
+          "wallet_amount": 2597.2540634340003,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759130031,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 6.541944444444445,
+          "wallet_amount": 2251.7371797120004,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759129811,
+          "gake_timestamp": 1759153362
+        },
+        {
+          "token": "Token_99ASe6",
+          "token_mint": "99ASe6QAH542dnKxH8JtrTAvjYjztEMSnY63TRZzpump",
+          "hours_before_gake": 6.791111111111111,
+          "wallet_amount": 4744.996058503,
+          "gake_amount": 80.0,
+          "wallet_timestamp": 1759128914,
+          "gake_timestamp": 1759153362
+        }
+      ],
+      "avg_lead_time_hours": 5.246031746031746,
+      "total_coordinated_volume": 22287.648112083,
+      "coordination_rate": 350.0
+    }
+  },
+  "secondary_coordination": {
+    "Go3uyiPDWsha8NUVR6NVMxAyvP9nDUhSA3xWkBcB7HMT": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 3.0330555555555554
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 3.6630555555555557
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.881666666666666
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.69361111111111
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 11.70111111111111
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 12.90611111111111
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 13.161944444444444
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 13.223055555555556
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 13.472222222222221
+        }
+      ],
+      "total_second_degree_matches": 9
+    },
+    "8RbueGXkddi2RCdu9iznZYiPTgx56swNG6hRreAcNY27": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.04027777777777778
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.5352777777777777
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 5.753888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.4775
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.468055555555555
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.61888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.833333333333334
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.894444444444444
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.143611111111111
+        }
+      ],
+      "total_second_degree_matches": 9
+    },
+    "Cfq4rLkhgBtaB5BiEEezdy4KgNB7zcsyJ78zjTfyVxsN": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.089166666666667
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.594166666666666
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 3.3755555555555556
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 2.6519444444444447
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.6613888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.48944444444444446
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.7038888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.765
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 1.0141666666666667
+        }
+      ],
+      "total_second_degree_matches": 9
+    },
+    "D9x71ABhLDEoFDUPQ5Uzt6W3GvL5M2zW3Y4JyvaZgqcN": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.04027777777777778
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.5352777777777777
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 5.753888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.4775
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.468055555555555
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.61888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.833333333333334
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.894444444444444
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.143611111111111
+        }
+      ],
+      "total_second_degree_matches": 9
+    },
+    "ECNeyAGXYuX9MHmbPXgQ6i1KB5N1a1Qe8GkxocXBbBib": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.5141666666666667
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 1.0091666666666668
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.227777777777778
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.951388888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.941944444444445
+        }
+      ],
+      "total_second_degree_matches": 5
+    },
+    "7uKzv2oQxkZZJ9JiT2CLN3LxwYqftEXqCpT35gQWftgF": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.29138888888888886
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 0.7863888888888889
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.005
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 6.728611111111111
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.719166666666666
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 9.87
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.084444444444445
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.145555555555555
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.394722222222223
+        }
+      ],
+      "total_second_degree_matches": 9
+    },
+    "59B36Dnu5fTFjCavdDwrGtW44BfFNmV54NfoY9hU8BVo": {
+      "coordinates_with": [
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 2.1894444444444443
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 2.6844444444444444
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 7.9030555555555555
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 8.626666666666667
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 10.617222222222223
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 11.768055555555556
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 11.9825
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 12.043611111111112
+        },
+        {
+          "primary_wallet": "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi",
+          "token": "Token_99ASe6",
+          "time_diff_hours": 12.292777777777777
+        }
+      ],
+      "total_second_degree_matches": 9
+    }
+  },
+  "network_effects": {
+    "GV8uvDM3b4hJUEUGGu3Gr8UYQ31rR4QtTx26mZyXjgUi": {
+      "shared_tokens_with_other_coordinated_wallets": [],
+      "timing_correlations": {},
+      "similar_trading_patterns": 0
+    }
+  },
+  "timing_anomalies": {},
+  "liquidity_coordination": {}
+}

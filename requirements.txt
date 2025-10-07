@@ -3,5 +3,5 @@ requests==2.31.0
 solders==0.18.1
 gunicorn==21.2.0
 pandas
-python-telegram-bot
+python-telegram-bot[job-queue]
 python-dotenv

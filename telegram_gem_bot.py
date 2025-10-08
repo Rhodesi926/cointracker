@@ -450,7 +450,12 @@ async def setthreshold(update: Update, context: ContextTypes.DEFAULT_TYPE):
         old_threshold = bot.score_threshold
         bot.score_threshold = new_threshold
         logger.info(f"Threshold changed from {old_threshold}% to {new_threshold}% by user {update.effective_user.id}")
-        await update.message.reply_text(f"✅ Threshold updated: {old_threshold}% → *{new_threshold}%*", parse_mode='Markdown')
+        await update.message.reply_text(
+            f"✅ Threshold updated!\n"
+            f"Old: {old_threshold}%\n"
+            f"New: *{new_threshold}%*",
+            parse_mode='Markdown'
+        )
     except ValueError:
         await update.message.reply_text("⚠️ Invalid number. Please provide a valid percentage.")
 

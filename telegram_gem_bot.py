@@ -5,11 +5,19 @@ import json
 import os
 import time
 import asyncio
+import logging
 from dotenv import load_dotenv
 from typing import List, Dict, Any
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
 from collections import defaultdict
+
+# Configure logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
@@ -197,12 +205,19 @@ class TelegramGemBot:
         chat_id = update.effective_chat.id
         limit = 20 if quick else 50
         
+        logger.info(f"Starting scan for chat {chat_id}, limit={limit}")
+        
         tokens = self.get_latest_tokens(limit)
         if not tokens:
+            logger.warning("No tokens found from DexScreener")
             return []
         
+        logger.info(f"Retrieved {len(tokens)} tokens to analyze")
+        
         gems = []
-        for token in tokens:
+        for idx, token in enumerate(tokens):
+            logger.info(f"[{idx+1}/{len(tokens)}] Analyzing {token['symbol']} ({token['address'][:8]}...)")
+            
             birdeye_data = self.get_token_metrics_birdeye(token['address'])
             dex_data = self.get_token_metrics_dexscreener(token['address'])
             
@@ -216,9 +231,13 @@ class TelegramGemBot:
             }
             
             score = self.calculate_token_score(metrics)
+            volume_per_sec = dex_data['volume_h1'] / 3600 if dex_data['volume_h1'] > 0 else 0
+            
+            # Log detailed metrics
+            logger.info(f"  Metrics - MC: ${metrics['market_cap']:,.0f}, Liq: ${max(metrics['liquidity'], metrics['liquidity_dex']):,.0f}, Vol/s: ${volume_per_sec:.2f}/s, 5m: {metrics['price_change_5m']:.1f}%")
+            logger.info(f"  Score: {score:.0f}% {'✅ GEM!' if score >= 80 else '❌ Rejected'}")
             
             if score >= 80:
-                volume_per_sec = dex_data['volume_h1'] / 3600 if dex_data['volume_h1'] > 0 else 0
                 gems.append({
                     'score': score,
                     'symbol': token['symbol'],
@@ -229,9 +248,11 @@ class TelegramGemBot:
                     'price_change_5m': metrics['price_change_5m'],
                     'price': metrics['price']
                 })
+                logger.info(f"  🎯 Added to gems list!")
             
             time.sleep(1)
         
+        logger.info(f"Scan complete. Found {len(gems)} gems out of {len(tokens)} tokens")
         return gems
     
     async def send_gem_alert(self, update: Update, gem: Dict):
@@ -269,17 +290,20 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def scan(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    logger.info(f"Scan command received from user {update.effective_user.id}")
     await update.message.reply_text("🔍 Starting quick scan of 20 tokens...")
     bot = context.bot_data['scanner']
     gems = await bot.scan_tokens(update, quick=True)
     
     if gems:
+        logger.info(f"Sending {len(gems)} gems to user")
         await update.message.reply_text(f"✅ Found {len(gems)} gems!")
         for gem in gems:
             if gem['address'] not in bot.alerted_tokens:
                 await bot.send_gem_alert(update, gem)
                 bot.save_alerted_token(gem['address'])
     else:
+        logger.info("No gems found in quick scan")
         await update.message.reply_text("😴 No 80%+ gems found in this scan.")
 
 async def deepscan(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -410,7 +434,8 @@ def main():
     application.add_handler(CommandHandler("status", status))
     application.add_handler(CommandHandler("clear", clear_alerted))
     
-    print("🤖 Bot started! Send /start in Telegram to begin")
+    logger.info("🤖 Bot started! Send /start in Telegram to begin")
+    logger.info("Bot is now polling for updates...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":

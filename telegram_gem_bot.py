@@ -23,9 +23,10 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 class TelegramGemBot:
-    def __init__(self):
+    def __init__(self, score_threshold=60):
         self.birdeye_api_key = os.getenv('BIRDEYE_API_KEY')
         self.telegram_bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
+        self.score_threshold = score_threshold
         
         if not self.birdeye_api_key:
             raise ValueError("BIRDEYE_API_KEY not found in .env")
@@ -205,7 +206,7 @@ class TelegramGemBot:
         chat_id = update.effective_chat.id
         limit = 20 if quick else 50
         
-        logger.info(f"Starting scan for chat {chat_id}, limit={limit}")
+        logger.info(f"Starting scan for chat {chat_id}, limit={limit}, threshold={self.score_threshold}%")
         
         tokens = self.get_latest_tokens(limit)
         if not tokens:
@@ -235,9 +236,9 @@ class TelegramGemBot:
             
             # Log detailed metrics
             logger.info(f"  Metrics - MC: ${metrics['market_cap']:,.0f}, Liq: ${max(metrics['liquidity'], metrics['liquidity_dex']):,.0f}, Vol/s: ${volume_per_sec:.2f}/s, 5m: {metrics['price_change_5m']:.1f}%")
-            logger.info(f"  Score: {score:.0f}% {'✅ GEM!' if score >= 80 else '❌ Rejected'}")
+            logger.info(f"  Score: {score:.0f}% {'✅ GEM!' if score >= self.score_threshold else '❌ Rejected'}")
             
-            if score >= 80:
+            if score >= self.score_threshold:
                 gems.append({
                     'score': score,
                     'symbol': token['symbol'],
@@ -277,22 +278,32 @@ class TelegramGemBot:
 
 # Bot command handlers
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    bot = context.bot_data['scanner']
+    chat_id = update.effective_chat.id
+    user_id = update.effective_user.id
+    username = update.effective_user.username
+    
+    logger.info(f"START command from user_id={user_id}, chat_id={chat_id}, username={username}")
+    
     await update.message.reply_text(
         "💎 *Gem Scanner Bot* 💎\n\n"
+        f"✅ Connected! Your chat_id is: `{chat_id}`\n"
+        f"🎯 Current threshold: *{bot.score_threshold}%*\n\n"
         "Commands:\n"
         "/scan - Quick scan (20 tokens)\n"
         "/deepscan - Deep scan (50 tokens)\n"
         "/monitor - Start continuous monitoring\n"
         "/stop - Stop monitoring\n"
         "/status - Check monitoring status\n"
+        "/setthreshold <number> - Set score threshold\n"
         "/clear - Clear alerted tokens list",
         parse_mode='Markdown'
     )
 
 async def scan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logger.info(f"Scan command received from user {update.effective_user.id}")
-    await update.message.reply_text("🔍 Starting quick scan of 20 tokens...")
     bot = context.bot_data['scanner']
+    await update.message.reply_text(f"🔍 Starting quick scan of 20 tokens (threshold: {bot.score_threshold}%)...")
     gems = await bot.scan_tokens(update, quick=True)
     
     if gems:
@@ -304,11 +315,11 @@ async def scan(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 bot.save_alerted_token(gem['address'])
     else:
         logger.info("No gems found in quick scan")
-        await update.message.reply_text("😴 No 80%+ gems found in this scan.")
+        await update.message.reply_text(f"😴 No {bot.score_threshold}%+ gems found in this scan.")
 
 async def deepscan(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🔍 Starting deep scan of 50 tokens... (this may take 1-2 minutes)")
     bot = context.bot_data['scanner']
+    await update.message.reply_text(f"🔍 Starting deep scan of 50 tokens (threshold: {bot.score_threshold}%)... (this may take 1-2 minutes)")
     gems = await bot.scan_tokens(update, quick=False)
     
     if gems:
@@ -318,7 +329,7 @@ async def deepscan(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await bot.send_gem_alert(update, gem)
                 bot.save_alerted_token(gem['address'])
     else:
-        await update.message.reply_text("😴 No 80%+ gems found in this scan.")
+        await update.message.reply_text(f"😴 No {bot.score_threshold}%+ gems found in this scan.")
 
 async def monitor_callback(context: ContextTypes.DEFAULT_TYPE):
     job = context.job
@@ -379,7 +390,7 @@ async def monitor(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"✅ Monitoring started!\n"
         f"📊 Scanning every {interval} minutes\n"
-        f"🎯 Will alert on 80%+ gems\n\n"
+        f"🎯 Will alert on {bot.score_threshold}%+ gems\n\n"
         f"Use /stop to stop monitoring"
     )
 
@@ -408,9 +419,40 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE):
     status_text = (
         f"📊 *Bot Status*\n\n"
         f"Monitoring: {'✅ Active' if is_active else '❌ Inactive'}\n"
+        f"Score Threshold: {bot.score_threshold}%\n"
         f"Alerted tokens: {alerted_count}\n"
     )
     await update.message.reply_text(status_text, parse_mode='Markdown')
+
+async def setthreshold(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    bot = context.bot_data['scanner']
+    
+    if not context.args or len(context.args) == 0:
+        await update.message.reply_text(
+            f"📊 *Current threshold:* {bot.score_threshold}%\n\n"
+            f"*Usage:* /setthreshold <percentage>\n"
+            f"*Example:* /setthreshold 60\n\n"
+            f"*Recommendations:*\n"
+            f"• 80-100% - Very selective (original setting)\n"
+            f"• 60-79% - Balanced\n"
+            f"• 40-59% - More results\n"
+            f"• Below 40% - High volume",
+            parse_mode='Markdown'
+        )
+        return
+    
+    try:
+        new_threshold = float(context.args[0])
+        if new_threshold < 0 or new_threshold > 100:
+            await update.message.reply_text("⚠️ Threshold must be between 0 and 100")
+            return
+        
+        old_threshold = bot.score_threshold
+        bot.score_threshold = new_threshold
+        logger.info(f"Threshold changed from {old_threshold}% to {new_threshold}% by user {update.effective_user.id}")
+        await update.message.reply_text(f"✅ Threshold updated: {old_threshold}% → *{new_threshold}%*", parse_mode='Markdown')
+    except ValueError:
+        await update.message.reply_text("⚠️ Invalid number. Please provide a valid percentage.")
 
 async def clear_alerted(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot_data['scanner']
@@ -420,7 +462,7 @@ async def clear_alerted(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(f"🗑️ Cleared {count} alerted tokens")
 
 def main():
-    scanner = TelegramGemBot()
+    scanner = TelegramGemBot(score_threshold=60)  # Default threshold set to 60%
     
     application = Application.builder().token(scanner.telegram_bot_token).build()
     application.bot_data['scanner'] = scanner
@@ -432,9 +474,11 @@ def main():
     application.add_handler(CommandHandler("monitor", monitor))
     application.add_handler(CommandHandler("stop", stop_monitor))
     application.add_handler(CommandHandler("status", status))
+    application.add_handler(CommandHandler("setthreshold", setthreshold))
     application.add_handler(CommandHandler("clear", clear_alerted))
     
     logger.info("🤖 Bot started! Send /start in Telegram to begin")
+    logger.info(f"📊 Default score threshold: {scanner.score_threshold}%")
     logger.info("Bot is now polling for updates...")
     application.run_polling(allowed_updates=Update.ALL_TYPES)
 

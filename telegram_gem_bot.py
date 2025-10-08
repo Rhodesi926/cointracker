@@ -272,7 +272,7 @@ class TelegramGemBot:
 
 💰 *Price:* ${gem['price']:.8f}
 
-🔗 [View on DexScreener](https://dexscreener.com/solana/{gem['address']})
+🔗 [View on GMGN](https://gmgn.ai/sol/token/{gem['address']})
 """
         await update.effective_chat.send_message(text=message, parse_mode='Markdown')
 

@@ -337,26 +337,92 @@ async def monitor_callback(context: ContextTypes.DEFAULT_TYPE):
     chat_id = job.chat_id
     
     try:
-        # Create a mock update object for scanning
-        class MockUpdate:
-            class MockChat:
-                def __init__(self, chat_id):
-                    self.id = chat_id
-                async def send_message(self, text, parse_mode=None):
-                    await context.bot.send_message(chat_id=chat_id, text=text, parse_mode=parse_mode)
+        logger.info(f"🔍 Starting scheduled monitor scan for chat {chat_id}")
+        
+        # Send notification that scan is starting
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text="🔍 Starting scheduled deep scan..."
+        )
+        
+        # Get tokens directly without needing Update object
+        tokens = bot.get_latest_tokens(50)
+        if not tokens:
+            await context.bot.send_message(chat_id=chat_id, text="⚠️ No tokens found")
+            return
+        
+        logger.info(f"Retrieved {len(tokens)} tokens to analyze")
+        
+        gems = []
+        for idx, token in enumerate(tokens):
+            logger.info(f"[{idx+1}/{len(tokens)}] Analyzing {token['symbol']}")
             
-            def __init__(self, chat_id):
-                self.effective_chat = self.MockChat(chat_id)
+            birdeye_data = bot.get_token_metrics_birdeye(token['address'])
+            dex_data = bot.get_token_metrics_dexscreener(token['address'])
+            
+            metrics = {
+                'market_cap': dex_data['market_cap'],
+                'volume_h1': dex_data['volume_h1'],
+                'liquidity': birdeye_data['liquidity'],
+                'liquidity_dex': dex_data['liquidity_dex'],
+                'price': birdeye_data['price'],
+                'price_change_5m': dex_data['price_change_5m']
+            }
+            
+            score = bot.calculate_token_score(metrics)
+            volume_per_sec = dex_data['volume_h1'] / 3600 if dex_data['volume_h1'] > 0 else 0
+            
+            logger.info(f"  Score: {score:.0f}%")
+            
+            if score >= bot.score_threshold:
+                gems.append({
+                    'score': score,
+                    'symbol': token['symbol'],
+                    'address': token['address'],
+                    'market_cap': metrics['market_cap'],
+                    'liquidity': max(metrics['liquidity'], metrics['liquidity_dex']),
+                    'volume_per_sec': volume_per_sec,
+                    'price_change_5m': metrics['price_change_5m'],
+                    'price': metrics['price']
+                })
+            
+            time.sleep(1)
         
-        update = MockUpdate(chat_id)
-        gems = await bot.scan_tokens(update, quick=False)
-        
+        # Send results
         if gems:
+            await context.bot.send_message(chat_id=chat_id, text=f"✅ Found {len(gems)} gems!")
             for gem in gems:
                 if gem['address'] not in bot.alerted_tokens:
-                    await bot.send_gem_alert(update, gem)
+                    # Send gem alert manually
+                    message = f"""
+🚨 *GEM ALERT!* 🚨
+
+*Score:* {gem['score']:.0f}%
+*Symbol:* {gem['symbol']}
+*Contract:* `{gem['address']}`
+
+📊 *Metrics:*
+• Market Cap: ${gem['market_cap']:,.0f}
+• Liquidity: ${gem['liquidity']:,.0f}
+• Volume/sec: ${gem['volume_per_sec']:.2f}/s
+• 5m Change: {gem['price_change_5m']:.1f}%
+
+💰 *Price:* ${gem['price']:.8f}
+
+🔗 [View on GMGN](https://gmgn.ai/sol/token/{gem['address']})
+"""
+                    await context.bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
                     bot.save_alerted_token(gem['address'])
+        else:
+            await context.bot.send_message(
+                chat_id=chat_id,
+                text=f"😴 No {bot.score_threshold}%+ gems found in this scan."
+            )
+        
+        logger.info(f"Monitor scan complete for chat {chat_id}")
+        
     except Exception as e:
+        logger.error(f"Error during monitoring scan: {e}", exc_info=True)
         await context.bot.send_message(chat_id=chat_id, text=f"❌ Error during monitoring scan: {e}")
 
 async def monitor(update: Update, context: ContextTypes.DEFAULT_TYPE):
